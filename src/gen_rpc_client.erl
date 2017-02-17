@@ -243,7 +243,7 @@ init({Node}) ->
             ?log(info, "event=initializing_client driver=~s node=\"~s\" port=~B", [Driver, Node, Port]),
             case DriverMod:connect(Node, Port) of
                 {ok, Socket} ->
-                    case DriverMod:authenticate_server(Socket) of
+                    case DriverMod:authenticate_server({atom_to_list(Node), Socket}) of
                         ok ->
                             {ok, #state{socket=Socket,
                                         driver=Driver,
