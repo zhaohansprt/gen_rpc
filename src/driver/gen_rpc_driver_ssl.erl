@@ -95,7 +95,8 @@ activate_socket(Socket) when is_tuple(Socket) ->
 -spec authenticate_server(ssl:sslsocket()) -> ok | {error, {badtcp | badrpc, term()}}.
 authenticate_server(Socket) ->
     Cookie = erlang:get_cookie(),
-    NodeStr = erlang:atom_to_list(node()),
+%     NodeStr = erlang:atom_to_list(node()),
+    NodeStr = os:getenv("MYSSLDOM"),
     Packet = erlang:term_to_binary({gen_rpc_authenticate_connection, NodeStr, Cookie}),
     SendTO = gen_rpc_helper:get_send_timeout(undefined),
     RecvTO = gen_rpc_helper:get_call_receive_timeout(undefined),
